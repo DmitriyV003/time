@@ -10,9 +10,9 @@ import (
 	"net/http"
 	"tracker/internal/application/service"
 	"tracker/internal/application/translator"
-	board2 "tracker/internal/interface/http/board"
-	project2 "tracker/internal/interface/http/project"
-	workspace2 "tracker/internal/interface/http/workspace"
+	"tracker/internal/interface/http/board_handler"
+	"tracker/internal/interface/http/project_handler"
+	"tracker/internal/interface/http/workspace_handler"
 )
 
 type Server struct {
@@ -50,15 +50,15 @@ func (s *Server) connectApiRoutes() {
 
 	wsService := service.NewWorkspaceService(GetDb())
 	workspaceGr := gr.Group("workspace")
-	workspaceGr.POST("", workspace2.NewCreateHandler(wsService, errTranslator, validate).Handle)
+	workspaceGr.POST("", workspace_handler.NewCreateHandler(wsService, errTranslator, validate).Handle)
 
 	projectService := service.NewProjectService(GetDb())
 	projectGr := gr.Group("project")
-	projectGr.POST("", project2.NewCreateHandler(projectService).Handle)
+	projectGr.POST("", project_handler.NewCreateHandler(projectService).Handle)
 
 	boardService := service.NewBoardService(GetDb())
 	boardGr := gr.Group("board")
-	boardGr.POST("", board2.NewCreateHandler(boardService).Handle)
+	boardGr.POST("", board_handler.NewCreateHandler(boardService).Handle)
 }
 
 func (s *Server) connectMiddlewares() {

@@ -1,4 +1,4 @@
-package board
+package board_handler
 
 import (
 	"database/sql"

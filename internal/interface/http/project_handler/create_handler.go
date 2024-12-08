@@ -1,4 +1,4 @@
-package project
+package project_handler
 
 import (
 	"github.com/labstack/echo/v4"
